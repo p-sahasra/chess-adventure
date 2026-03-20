@@ -1788,17 +1788,31 @@ function Exercise({ ex, lessonColor }) {
           <div style={{ textAlign: "center", marginBottom: 10 }}>
             <MiniBoard pieces={pos.pieces} highlights={pos.highlights || []} size={240} />
           </div>
-          <button onClick={() => toggleAnswer(i)} style={{
-            fontFamily: "'Fredoka', sans-serif", fontSize: 15, fontWeight: 600, color: lessonColor,
-            background: lessonColor + "15", border: "none", borderRadius: 12, padding: "8px 18px",
-            cursor: "pointer", display: "block", margin: "0 auto",
-          }}>{showAnswer[i] ? "Hide Answer ▴" : "Show Answer ▾"}</button>
-          {showAnswer[i] && (
-            <div style={{
+          <div
+            onClick={() => toggleAnswer(i)}
+            style={{
               fontFamily: "'Nunito', sans-serif", fontSize: 16, color: "#555", lineHeight: 1.5,
               background: lessonColor + "10", borderRadius: 12, padding: "12px 16px", marginTop: 10,
-            }}>{pos.answer}</div>
-          )}
+              position: "relative", cursor: "pointer", userSelect: showAnswer[i] ? "auto" : "none",
+              filter: showAnswer[i] ? "none" : "blur(6px)",
+              WebkitFilter: showAnswer[i] ? "none" : "blur(6px)",
+              transition: "filter 0.3s ease",
+            }}
+          >
+            {pos.answer}
+            {!showAnswer[i] && (
+              <div style={{
+                position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+                borderRadius: 12, background: "rgba(255,255,255,0.1)",
+              }}>
+                <span style={{
+                  fontFamily: "'Fredoka', sans-serif", fontSize: 15, fontWeight: 600, color: lessonColor,
+                  background: "white", padding: "8px 20px", borderRadius: 12,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)", filter: "none", WebkitFilter: "none",
+                }}>Tap to Reveal Answer</span>
+              </div>
+            )}
+          </div>
         </div>
       ))}
 
